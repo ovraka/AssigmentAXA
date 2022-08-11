@@ -1,6 +1,7 @@
 package com.indocyber.assigmentaxa.view_model
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -17,10 +18,16 @@ import javax.inject.Inject
 class PhotoViewModel @Inject constructor(application: Application, val photoUseCase: PhotoUseCase) :
     AndroidViewModel(application) {
     val searchData = MutableLiveData<String>()
-    val photoData = MutableLiveData<AppResponse<PhotoResponse>>()
+    val photoData = MutableLiveData<AppResponse<List<PhotoResponseItem>>>()
+
+    init {
+        getPhoto()
+    }
 
     fun getPhoto() {
+        Log.i("No Data", "Kepanggil")
         viewModelScope.launch {
+            Log.i("No Data", "baru get data")
             photoUseCase.invoke().collect {
                 photoData.postValue(it)
             }
@@ -29,7 +36,7 @@ class PhotoViewModel @Inject constructor(application: Application, val photoUseC
 
     fun filter(search: String): List<PhotoResponseItem> = photoData.value?.let {
         if (it is AppResponse.AppResponseSuccess) {
-            it.data?.photoResponseItem.orEmpty().filter {
+            it.data?.filter {
                 it.title.contains(search, true)
             }
         } else {

@@ -7,6 +7,6 @@ object Constants {
     const val BASE_URL = "https://jsonplaceholder.typicode.com/"
 
     fun ImageView.loadImageFromUrl(url: String) {
-        Glide.with(this).load(url).into(this)
+        Glide.with(this).load("$url.png").into(this)
     }
 }

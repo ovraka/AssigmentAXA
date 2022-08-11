@@ -19,3 +19,4 @@ open class AppResponse<T> {
 
     class AppResponseLoading<T>() : AppResponse<T>()
 }
+

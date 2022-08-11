@@ -11,7 +11,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitClient {
 
-    fun getClient(context: Context): Retrofit {
+    fun getClient(): Retrofit {
         val client = OkHttpClient.Builder()
             .addInterceptor(HttpLoggingInterceptor {
                 Log.e("Http Log Interceptor", it)
